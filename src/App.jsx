@@ -37,49 +37,63 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <input
-        type="text"
-        value={inputName}
-        onChange={(e) => setInputName(e.target.value)}
-      />
-      {/* <button onClick={addTask}>Добавить задачу</button>
-      {tasks.map((task) => (
-        <div>
-          {task.id} | {task.name}
-          <button onClick={() => deleteTask(task.id)}>Удалить</button>
-        </div> */}
-      <button onClick={addTask}>Добавить задачу</button>
-      {tasks.map((task) => (
-        <div key={task.id}>
-          {editTaskId === task.id ? (
-            <>
-              <input
-                type="text"
-                value={editTaskName}
-                onChange={(e) => setEditTaskName(e.target.value)}
-              />
-              <button onClick={() => editTask(task.id, editTaskName)}>
-                Сохранить
-              </button>
-              <button onClick={() => setEditTaskId(null)}>Отмена</button>
-            </>
-          ) : (
-            <>
-              {task.id} | {task.name}
-              <button onClick={() => deleteTask(task.id)}>Удалить</button>
-              <button
-                onClick={() => {
-                  setEditTaskId(task.id);
-                  setEditTaskName(task.name);
-                }}
-              >
-                Редактировать
-              </button>
-            </>
-          )}
-        </div>
-      ))}
+    <div className="container">
+      <div className="App">
+        <input
+          className="input"
+          type="text"
+          value={inputName}
+          onChange={(e) => setInputName(e.target.value)}
+        />
+        <button className="addBtn" onClick={addTask}>
+          Добавить задачу
+        </button>
+        {tasks.map((task) => (
+          <div className="tasks" key={task.id}>
+            {editTaskId === task.id ? (
+              <>
+                <input
+                  className="input"
+                  type="text"
+                  value={editTaskName}
+                  onChange={(e) => setEditTaskName(e.target.value)}
+                />
+                <button
+                  className="saveBtn"
+                  onClick={() => editTask(task.id, editTaskName)}
+                >
+                  Сохранить
+                </button>
+                <button
+                  className="closeBtn"
+                  onClick={() => setEditTaskId(null)}
+                >
+                  Отмена
+                </button>
+              </>
+            ) : (
+              <>
+                {task.id} | {task.name}
+                <button
+                  className="deleteBtn"
+                  onClick={() => deleteTask(task.id)}
+                >
+                  Удалить
+                </button>
+                <button
+                  className="editBtn"
+                  onClick={() => {
+                    setEditTaskId(task.id);
+                    setEditTaskName(task.name);
+                  }}
+                >
+                  Редактировать
+                </button>
+              </>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
