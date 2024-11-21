@@ -1,15 +1,12 @@
-import { applyMiddleware, combineReducers, createStore } from "redux";
-import { taskReduser } from "./taskReducer";
-import { countReducer } from "./countReducer";
-import { composeWithDevTools } from "@redux-devtools/extension";
-import { thunk } from "redux-thunk";
+import { configureStore } from "@reduxjs/toolkit";
+import tasksReducer from "./Slices/taskSlice";
+import countReducer from "./Slices/countSlice";
 
-const rootReducer = combineReducers({
-  tasks: taskReduser,
-  count: countReducer,
+export const store = configureStore({
+  reducer: {
+    tasks: tasksReducer,
+    count: countReducer,
+  },
 });
 
-export const store = createStore(
-  rootReducer,
-  composeWithDevTools(applyMiddleware(thunk))
-);
+export default store;

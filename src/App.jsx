@@ -1,14 +1,10 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addTaskAction,
-  removeTaskAction,
-  editTaskAction,
-} from "./store/taskReducer";
-import { incrementAction } from "./store/countReducer";
+import { addTask, removeTask, editTask } from "./store/Slices/taskSlice";
+import { increment } from "./store/Slices/countSlice";
 
 function App() {
-  const [inputName, setInputName] = useState();
+  const [inputName, setInputName] = useState("");
   const [editTaskId, setEditTaskId] = useState(null);
   const [editTaskName, setEditTaskName] = useState("");
 
@@ -16,22 +12,19 @@ function App() {
   const tasks = useSelector((state) => state.tasks.tasks);
   const count = useSelector((state) => state.count.count);
 
-  const addTask = () => {
-    const newTask = {
-      id: count,
-      name: inputName,
-    };
+  const addTaskHandler = () => {
+    const newTask = { id: count, name: inputName };
     setInputName("");
-    dispatch(addTaskAction(newTask));
-    dispatch(incrementAction());
+    dispatch(addTask(newTask));
+    dispatch(increment());
   };
 
-  const deleteTask = (taskId) => {
-    dispatch(removeTaskAction(taskId));
+  const deleteTaskHandler = (taskId) => {
+    dispatch(removeTask(taskId));
   };
 
-  const editTask = (taskId, newName) => {
-    dispatch(editTaskAction(taskId, newName));
+  const editTaskHandler = (taskId, newName) => {
+    dispatch(editTask({ taskId, newName }));
     setEditTaskId(null);
     setEditTaskName("");
   };
@@ -45,7 +38,7 @@ function App() {
           value={inputName}
           onChange={(e) => setInputName(e.target.value)}
         />
-        <button className="addBtn" onClick={addTask}>
+        <button className="addBtn" onClick={addTaskHandler}>
           Добавить задачу
         </button>
         {tasks.map((task) => (
@@ -60,7 +53,7 @@ function App() {
                 />
                 <button
                   className="saveBtn"
-                  onClick={() => editTask(task.id, editTaskName)}
+                  onClick={() => editTaskHandler(task.id, editTaskName)}
                 >
                   Сохранить
                 </button>
@@ -85,7 +78,7 @@ function App() {
                 </button>
                 <button
                   className="deleteBtn"
-                  onClick={() => deleteTask(task.id)}
+                  onClick={() => deleteTaskHandler(task.id)}
                 >
                   Удалить
                 </button>
