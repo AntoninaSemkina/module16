@@ -75,12 +75,6 @@ function App() {
               <>
                 {task.id} | {task.name}
                 <button
-                  className="deleteBtn"
-                  onClick={() => deleteTask(task.id)}
-                >
-                  Удалить
-                </button>
-                <button
                   className="editBtn"
                   onClick={() => {
                     setEditTaskId(task.id);
@@ -88,6 +82,12 @@ function App() {
                   }}
                 >
                   Редактировать
+                </button>
+                <button
+                  className="deleteBtn"
+                  onClick={() => deleteTask(task.id)}
+                >
+                  Удалить
                 </button>
               </>
             )}
